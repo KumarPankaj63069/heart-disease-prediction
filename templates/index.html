@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartGuard AI - Heart Test</title>
+    
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+        
+        /* Navbar */
+        .navbar-custom {
+            background: white;
+            padding: 16px 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .heart-icon {
+            color: #dc2626;
+            font-size: 1.8rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            35% { transform: scale(1); }
+            45% { transform: scale(1.05); }
+            55% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .brand-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .brand-text span {
+            color: #dc2626;
+        }
+        
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .back-link:hover {
+            color: #dc2626;
+        }
+        
+        /* Main Container */
+        .test-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Progress Bar */
+        .progress-section {
+            background: white;
+            border-radius: 30px;
+            padding: 25px 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #edf2f7;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .progress-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .progress-header h3 i {
+            color: #dc2626;
+        }
+        
+        .step-indicator {
+            background: #f1f5f9;
+            padding: 6px 15px;
+            border-radius: 50px;
+            color: #475569;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #dc2626, #ef4444);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 30px;
+            padding: 35px 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #edf2f7;
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .form-title p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 5px;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .form-label i {
+            color: #dc2626;
+            font-size: 1.1rem;
+        }
+        
+        .required-star {
+            color: #dc2626;
+            margin-left: 4px;
+        }
+        
+        .form-control-custom {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background: #fafbfc;
+        }
+        
+        .form-control-custom:focus {
+            outline: none;
+            border-color: #dc2626;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+        
+        .form-control-custom:hover {
+            border-color: #94a3b8;
+        }
+        
+        select.form-control-custom {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 45px;
+        }
+        
+        /* Input Groups */
+        .input-group-custom {
+            position: relative;
+        }
+        
+        .input-suffix {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Tooltip */
+        .info-tooltip {
+            display: inline-block;
+            margin-left: 6px;
+            color: #94a3b8;
+            cursor: help;
+            position: relative;
+        }
+        
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 100;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            margin-bottom: 8px;
+        }
+        
+        .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+        
+        /* Button Group */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary-custom {
+            flex: 2;
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            min-width: 200px;
+        }
+        
+        .btn-primary-custom:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+        }
+        
+        .btn-secondary-custom {
+            flex: 1;
+            background: white;
+            color: #475569;
+            border: 1.5px solid #e2e8f0;
+            padding: 16px 30px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            min-width: 120px;
+        }
+        
+        .btn-secondary-custom:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+            transform: translateY(-2px);
+        }
+        
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .info-card {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 15px;
+            border: 1px solid #edf2f7;
+            text-align: center;
+        }
+        
+        .info-card i {
+            font-size: 1.5rem;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+        
+        .info-card h6 {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .info-card p {
+            color: #64748b;
+            font-size: 0.8rem;
+            margin: 0;
+        }
+        
+        /* Responsive */
+        
+        /* TV Screens (1200px+) */
+        @media (min-width: 1200px) {
+            .test-container {
+                max-width: 1000px;
+            }
+            
+            .form-card {
+                padding: 45px 50px;
+            }
+            
+            .form-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Tablet (768px - 991px) */
+        @media (max-width: 991px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .info-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Mobile (below 768px) */
+        @media (max-width: 767px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            .navbar-custom {
+                padding: 12px 16px;
+            }
+            
+            .navbar-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .progress-section {
+                padding: 20px 15px;
+            }
+            
+            .form-card {
+                padding: 25px 20px;
+                border-radius: 25px;
+            }
+            
+            .form-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn-primary-custom, .btn-secondary-custom {
+                width: 100%;
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-card {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                gap: 15px;
+            }
+            
+            .info-card i {
+                margin-bottom: 0;
+            }
+        }
+        
+        /* Small Mobile (below 480px) */
+        @media (max-width: 480px) {
+            .progress-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .form-control-custom {
+                padding: 12px 14px;
+            }
+            
+            .tooltip-text {
+                white-space: normal;
+                width: 150px;
+            }
+        }
+        
+        /* Remove spinners from number inputs */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        input[type=number] {
+        -moz-animation:textfield;
+        }
+        
+        /* Validation styles */
+        .form-control-custom:invalid:not(:placeholder-shown) {
+            border-color: #dc2626;
+        }
+        
+        .form-control-custom:valid:not(:placeholder-shown) {
+            border-color: #22c55e;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Simple Navbar -->
+    <div class="navbar-custom">
+        <div class="navbar-content">
+            <div class="logo-area">
+                <div class="heart-icon">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </div>
+                <div class="brand-text">
+                    Heart<span>Disease</span> Predection
+                </div>
+            </div>
+            <a href="/dashboard" class="back-link">
+                <i class="bi bi-arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="test-container">
+        
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3>
+                    <i class="bi bi-clipboard2-pulse"></i>
+                    Heart Health Assessment
+                </h3>
+                <span class="step-indicator">
+                    <i class="bi bi-file-text me-1"></i>
+                    8 Questions
+                </span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-fill" style="width: 100%;"></div>
+            </div>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 12px; margin-bottom: 0;">
+                <i class="bi bi-info-circle me-1" style="color: #dc2626;"></i>
+                Fill in your details below for an accurate prediction
+            </p>
+        </div>
+        
+        <!-- Main Form Card -->
+        <div class="form-card">
+            <div class="form-title">
+                <h2>Enter Your Health Details</h2>
+                <p>All fields are required for accurate prediction</p>
+            </div>
+            
+            <form action="/predict" method="post" id="testForm">
+                <div class="form-grid">
+                    
+                    <!-- Age -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-calendar"></i>
+                            Age
+                            <span class="required-star">*</span>
+                            <span class="info-tooltip">
+                                <i class="bi bi-question-circle"></i>
+                                <span class="tooltip-text">Your age in years (20-100)</span>
+                            </span>
+                        </label>
+                        <div class="input-group-custom">
+                            <input type="number" 
+                                   class="form-control-custom" 
+                                   name="age" 
+                                   placeholder="e.g., 45"
+                                   min="20"
+                                   max="100"
+                                   required>
+                            <span class="input-suffix">years</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Gender -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-gender-ambiguous"></i>
+                            Gender
+                            <span class="required-star">*</span>
+                        </label>
+                        <select class="form-control-custom" name="sex" required>
+                            <option value="" disabled selected>Select gender</option>
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Chest Pain Type -->
+                    <div class="form-group full-width">
+                        <label class="form-label">
+                            <i class="bi bi-heart"></i>
+                            Chest Pain Type
+                            <span class="required-star">*</span>
+                            <span class="info-tooltip">
+                                <i class="bi bi-question-circle"></i>
+                                <span class="tooltip-text">Type of chest pain experienced</span>
+                            </span>
+                        </label>
+                        <select class="form-control-custom" name="cp" required>
+                            <option value="" disabled selected>Select chest pain type</option>
+                            <option value="0">Typical Angina (chest pain related to heart)</option>
+                            <option value="1">Atypical Angina (non-cardiac chest pain)</option>
+                            <option value="2">Non-anginal Pain (not related to heart)</option>
+                            <option value="3">Asymptomatic (no chest pain)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Blood Pressure -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-speedometer2"></i>
+                            Resting BP
+                            <span class="required-star">*</span>
+                        </label>
+                        <div class="input-group-custom">
+                            <input type="number" 
+                                   class="form-control-custom" 
+                                   name="trestbps" 
+                                   placeholder="e.g., 120"
+                                   min="80"
+                                   max="200"
+                                   required>
+                            <span class="input-suffix">mm Hg</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cholesterol -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-droplet"></i>
+                            Cholesterol
+                            <span class="required-star">*</span>
+                        </label>
+                        <div class="input-group-custom">
+                            <input type="number" 
+                                   class="form-control-custom" 
+                                   name="chol" 
+                                   placeholder="e.g., 200"
+                                   min="100"
+                                   max="400"
+                                   required>
+                            <span class="input-suffix">mg/dl</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Fasting Blood Sugar -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-cup-hot"></i>
+                            Fasting Sugar
+                            <span class="required-star">*</span>
+                        </label>
+                        <select class="form-control-custom" name="fbs" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">> 120 mg/dl (High)</option>
+                            <option value="0"><= 120 mg/dl (Normal)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Max Heart Rate -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-activity"></i>
+                            Max Heart Rate
+                            <span class="required-star">*</span>
+                        </label>
+                        <div class="input-group-custom">
+                            <input type="number" 
+                                   class="form-control-custom" 
+                                   name="thalach" 
+                                   placeholder="e.g., 150"
+                                   min="60"
+                                   max="220"
+                                   required>
+                            <span class="input-suffix">bpm</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Exercise Angina -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="bi bi-bicycle"></i>
+                            Exercise Angina
+                            <span class="required-star">*</span>
+                        </label>
+                        <select class="form-control-custom" name="exang" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">Yes (chest pain during exercise)</option>
+                            <option value="0">No (no chest pain)</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                
+                <!-- Button Group -->
+                <div class="button-group">
+                    <button type="submit" class="btn-primary-custom">
+                        <i class="bi bi-heart-pulse"></i>
+                        Predict My Heart Health
+                    </button>
+                    <a href="/dashboard" class="btn-secondary-custom">
+                        <i class="bi bi-x-lg"></i>
+                        Cancel
+                    </a>
+                </div>
+                
+                <!-- Info Cards -->
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="bi bi-shield-check"></i>
+                        <div>
+                            <h6>Secure & Private</h6>
+                            <p>Your data is encrypted</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <i class="bi bi-clock"></i>
+                        <div>
+                            <h6>2-3 Minutes</h6>
+                            <p>Quick assessment</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <i class="bi bi-graph-up"></i>
+                        <div>
+                            <h6>95% Accuracy</h6>
+                            <p>AI-powered</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        
+        <!-- Disclaimer -->
+        <div style="text-align: center; margin-top: 20px; color: #94a3b8; font-size: 0.8rem;">
+            <i class="bi bi-info-circle me-1"></i>
+            This tool is for informational purposes only. Always consult a healthcare professional.
+        </div>
+        
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Form Validation Script -->
+    <script>
+        // Form validation
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            const inputs = this.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value) {
+                    input.style.borderColor = '#dc2626';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#e2e8f0';
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields');
+            }
+        });
+        
+        // Real-time validation styling
+        document.querySelectorAll('.form-control-custom').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value) {
+                    this.style.borderColor = '#22c55e';
+                } else {
+                    this.style.borderColor = '#e2e8f0';
+                }
+            });
+            
+            input.addEventListener('blur', function() {
+                if (this.value && this.checkValidity()) {
+                    this.style.borderColor = '#22c55e';
+                } else if (this.value) {
+                    this.style.borderColor = '#dc2626';
+                } else {
+                    this.style.borderColor = '#e2e8f0';
+                }
+            });
+        });
+        
+        // Number input validation
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const min = parseInt(this.min);
+                const max = parseInt(this.max);
+                const value = parseInt(this.value);
+                
+                if (value < min) this.value = min;
+                if (value > max) this.value = max;
+            });
+        });
+        
+        // Clear form on page load
+        window.onload = function() {
+            // Don't reset the form, but ensure all fields are clean
+            console.log('Test form loaded');
+        };
+    </script>
+    
+</body>
+</html>

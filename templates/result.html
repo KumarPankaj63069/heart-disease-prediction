@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartPredict - Test Result</title>
+    
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+        
+        /* Full Width Navbar */
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: #dc3545;
+            font-size: 1.8rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            35% { transform: scale(1); }
+            45% { transform: scale(1.05); }
+            55% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo span {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .logo span span {
+            color: #dc3545;
+        }
+        
+        .date {
+            background: #f1f5f9;
+            padding: 6px 15px;
+            border-radius: 30px;
+            color: #475569;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Main Container - Center Content */
+        .main-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            padding: 30px 20px;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #edf2f7;
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* Result Icon */
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+        }
+        
+        .icon-circle.success {
+            background: #d1fae5;
+            color: #10b981;
+        }
+        
+        .icon-circle.warning {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+        
+        .icon-circle.info {
+            background: #dbeafe;
+            color: #3b82f6;
+        }
+        
+        /* Title */
+        .result-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .result-title.success {
+            color: #10b981;
+        }
+        
+        .result-title.warning {
+            color: #ef4444;
+        }
+        
+        .result-title.info {
+            color: #3b82f6;
+        }
+        
+        .result-subtitle {
+            color: #64748b;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+        
+        /* Prediction Box */
+        .prediction-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #edf2f7;
+        }
+        
+        .prediction-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .prediction-value.success {
+            color: #10b981;
+        }
+        
+        .prediction-value.warning {
+            color: #ef4444;
+        }
+        
+        .prediction-value.info {
+            color: #3b82f6;
+        }
+        
+        .prediction-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Confidence Bar */
+        .confidence {
+            margin: 20px 0;
+        }
+        
+        .confidence-header {
+            display: flex;
+            justify-content: space-between;
+            color: #475569;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            width: 95%;
+            background: linear-gradient(90deg, #ef4444, #10b981);
+            border-radius: 10px;
+        }
+        
+        /* Info Row */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 15px;
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            border: 1px solid #edf2f7;
+        }
+        
+        .info-item i {
+            font-size: 1.5rem;
+            color: #dc3545;
+            margin-bottom: 5px;
+        }
+        
+        .info-item small {
+            display: block;
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-top: 3px;
+        }
+        
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            flex: 1;
+            min-width: 140px;
+        }
+        
+        .btn-primary:hover {
+            background: #bb2d3b;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            flex: 1;
+            min-width: 140px;
+        }
+        
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+        
+        /* Download Links */
+        .download-links {
+            margin-top: 15px;
+        }
+        
+        .download-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin: 0 10px;
+        }
+        
+        .download-links a:hover {
+            color: #dc3545;
+        }
+        
+        .download-links span {
+            color: #e2e8f0;
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            text-align: left;
+        }
+        
+        .disclaimer i {
+            color: #f59e0b;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        
+        .disclaimer p {
+            color: #856404;
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .disclaimer strong {
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        
+        /* Mobile */
+        @media (max-width: 576px) {
+            .navbar {
+                padding: 12px 15px;
+            }
+            
+            .logo i {
+                font-size: 1.5rem;
+            }
+            
+            .logo span {
+                font-size: 1.1rem;
+            }
+            
+            .date {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .result-card {
+                padding: 25px 20px;
+            }
+            
+            .icon-circle {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+            
+            .result-title {
+                font-size: 1.5rem;
+            }
+            
+            .prediction-value {
+                font-size: 1.8rem;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .info-item {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                gap: 15px;
+                padding: 12px;
+            }
+            
+            .info-item i {
+                margin-bottom: 0;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .disclaimer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Full Width Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <i class="bi bi-heart-pulse-fill"></i>
+            <span>Heart<span>Predict</span></span>
+        </div>
+        <div class="date">
+            <i class="bi bi-calendar"></i>
+            <span id="currentDate"></span>
+        </div>
+    </div>
+
+    <!-- Center Content -->
+    <div class="main-container">
+        <div class="result-card">
+            
+            <!-- Dynamic Icon -->
+            {% if 'No' in prediction or 'Low' in prediction or 'Negative' in prediction %}
+            <div class="icon-circle success">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+            
+            <h2 class="result-title success">Good News!</h2>
+            <p class="result-subtitle">Low risk detected</p>
+            
+            <div class="prediction-box">
+                <div class="prediction-value success">{{ prediction }}</div>
+                <div class="prediction-label">Result</div>
+            </div>
+            
+            {% elif 'High' in prediction or 'Risk' in prediction or 'Positive' in prediction %}
+            <div class="icon-circle warning">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+            </div>
+            
+            <h2 class="result-title warning">Attention Needed</h2>
+            <p class="result-subtitle">Potential risk detected</p>
+            
+            <div class="prediction-box">
+                <div class="prediction-value warning">{{ prediction }}</div>
+                <div class="prediction-label">Result</div>
+            </div>
+            
+            {% else %}
+            <div class="icon-circle info">
+                <i class="bi bi-info-circle-fill"></i>
+            </div>
+            
+            <h2 class="result-title info">Assessment Complete</h2>
+            <p class="result-subtitle">Your result is ready</p>
+            
+            <div class="prediction-box">
+                <div class="prediction-value info">{{ prediction }}</div>
+                <div class="prediction-label">Result</div>
+            </div>
+            {% endif %}
+            
+            <!-- Confidence -->
+            <div class="confidence">
+                <div class="confidence-header">
+                    <span>Accuracy</span>
+                    <span>95%</span>
+                </div>
+                <div class="bar">
+                    <div class="bar-fill"></div>
+                </div>
+            </div>
+            
+            <!-- Info Row -->
+            <div class="info-row">
+                <div class="info-item">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                        <strong>2.5 min</strong>
+                        <small>Duration</small>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="bi bi-shield-check"></i>
+                    <div>
+                        <strong>95%</strong>
+                        <small>Accuracy</small>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="bi bi-calendar"></i>
+                    <div>
+                        <strong>3 mo</strong>
+                        <small>Next check</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="/dashboard" class="btn-primary">
+                    <i class="bi bi-grid"></i> Dashboard
+                </a>
+                <a href="/test" class="btn-secondary">
+                    <i class="bi bi-arrow-repeat"></i> New Test
+                </a>
+            </div>
+            
+            <!-- Download Links -->
+            <div class="download-links">
+                <a href="#" onclick="window.print()">
+                    <i class="bi bi-download"></i> PDF
+                </a>
+                <span>|</span>
+                <a href="#" onclick="shareResult()">
+                    <i class="bi bi-share"></i> Share
+                </a>
+            </div>
+            
+            <!-- Disclaimer -->
+            <div class="disclaimer">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <p>
+                    <strong>Disclaimer:</strong> For informational use only. 
+                    Consult a doctor for medical advice.
+                </p>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <i class="bi bi-heart-fill text-danger"></i>
+        HeartPredict - Your health companion
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Current date
+        function updateDate() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', options);
+        }
+        
+        // Share
+        function shareResult() {
+            const prediction = "{{ prediction }}";
+            if (navigator.share) {
+                navigator.share({
+                    title: 'HeartPredict Result',
+                    text: `My result: ${prediction}`,
+                });
+            } else {
+                alert('Press Ctrl+P to save as PDF');
+            }
+        }
+        
+        // Print
+        window.print = function() {
+            window.print();
+        };
+        
+        window.onload = updateDate;
+    </script>
+    
+</body>
+</html>

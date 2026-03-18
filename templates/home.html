@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartPredict - AI Heart Disease Prediction</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+        }
+        
+        /* ===== Hero Section ===== */
+        .hero {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: #dc2626;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #1e293b;
+            border: 1.5px solid #e2e8f0;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #dc2626;
+            color: #dc2626;
+            transform: translateY(-2px);
+        }
+        
+        /* Video Circle - Responsive */
+        .video-circle {
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.2);
+            border: 3px solid white;
+        }
+        
+        .video-circle video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Animation */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .hero-image {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* ===== Features Section ===== */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+        
+        .feature-card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #edf2f7;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: #dc2626;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: #fee2e2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .feature-icon i {
+            font-size: 2rem;
+            color: #dc2626;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: #64748b;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        /* ===== Stats Section ===== */
+        .stats {
+            padding: 60px 0;
+            background: #dc2626;
+            color: white;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item p {
+            font-size: 1rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        /* ===== CTA Section ===== */
+        .cta {
+            padding: 80px 0;
+            background: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* ===== Responsive ===== */
+        
+        /* Laptop (992px and above) */
+        @media (min-width: 992px) {
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .video-circle {
+                max-width: 500px;
+            }
+        }
+        
+        /* Tablet (768px - 991px) */
+        @media (max-width: 991px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .row {
+                gap: 40px;
+            }
+            
+            .video-circle {
+                max-width: 400px;
+            }
+        }
+        
+        /* Mobile (below 768px) */
+        @media (max-width: 767px) {
+            .hero {
+                padding: 40px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+                text-align: center;
+            }
+            
+            .hero p {
+                text-align: center;
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .video-circle {
+                max-width: 300px;
+                margin: 30px auto 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title p {
+                font-size: 1rem;
+            }
+            
+            .stat-item {
+                margin-bottom: 30px;
+            }
+            
+            .stat-item:last-child {
+                margin-bottom: 0;
+            }
+            
+            .cta h2 {
+                font-size: 2rem;
+            }
+            
+            .cta p {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Small Mobile (below 480px) */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .hero-buttons a {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .video-circle {
+                max-width: 250px;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+            
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .feature-icon i {
+                font-size: 1.5rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .stat-item h3 {
+                font-size: 2rem;
+            }
+            
+            .cta h2 {
+                font-size: 1.6rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .cta-buttons a {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Very Small Mobile (below 360px) */
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .video-circle {
+                max-width: 200px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    {% include 'navbar.html' %}
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>
+                        Your Heart Health,<br>
+                        <span>Our Priority</span>
+                    </h1>
+                    <p>
+                        Advanced AI-powered heart disease prediction system with 95% accuracy. 
+                        Get instant risk assessment and take control of your heart health today.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="/register" class="btn-primary">
+                            <i class="bi bi-person-plus"></i> Get Started
+                        </a>
+                        <a href="/about" class="btn-secondary">
+                            <i class="bi bi-info-circle"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="video-circle hero-image">
+                        <video autoplay muted loop playsinline>
+                            <source src="{{ url_for('static', filename='video/heart.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose HeartPredict?</h2>
+                <p>Advanced features for accurate heart health assessment</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <h3>AI-Powered</h3>
+                        <p>Machine learning algorithms trained on thousands of clinical cases for accurate predictions</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h3>95% Accuracy</h3>
+                        <p>High accuracy rate validated by medical professionals and clinical studies</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <h3>Instant Results</h3>
+                        <p>Get your risk assessment in seconds with detailed insights and recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS SECTION ===== -->
+    <section class="stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <h3>10,000+</h3>
+                        <p>Happy Users</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <h3>95%</h3>
+                        <p>Accuracy Rate</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Check Your Heart Health?</h2>
+            <p>Join thousands of users who monitor their heart health with HeartPredict</p>
+            <div class="cta-buttons">
+                <a href="/register" class="btn-primary">
+                    <i class="bi bi-person-plus"></i> Create Free Account
+                </a>
+                <a href="/login" class="btn-secondary">
+                    <i class="bi bi-box-arrow-in-right"></i> Login
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    {% include 'footer.html' %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartGuard AI - Create Account</title>
+    
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+        
+        .container-custom {
+            width: 100%;
+            max-width: 650px;  /* Laptop ke liye width badhayi */
+            margin: 0 auto;
+        }
+        
+        .register-card {
+            background: white;
+            border-radius: 24px;
+            padding: 45px 50px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #edf2f7;
+            width: 100%;
+        }
+        
+        /* Heart Icon - Red color */
+        .heart-icon {
+            font-size: 3.8rem;
+            color: #dc2626;  /* Red color */
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            35% { transform: scale(1); }
+            45% { transform: scale(1.05); }
+            55% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+        
+        /* Form Styles - Clean and professional */
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        
+        .form-control-custom {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background: #fafbfc;
+            color: #1e293b;
+        }
+        
+        .form-control-custom:focus {
+            outline: none;
+            border-color: #dc2626;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+        
+        .form-control-custom::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+        
+        /* Password toggle */
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            background: transparent;
+            border: none;
+            padding: 5px;
+        }
+        
+        .toggle-password:hover {
+            color: #dc2626;
+        }
+        
+        /* Password Strength - Minimal */
+        .password-strength {
+            margin-top: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            border-radius: 2px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+        
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: right;
+            margin-top: 4px;
+        }
+        
+        /* Terms */
+        .terms-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .terms-check input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #dc2626;
+            cursor: pointer;
+        }
+        
+        .terms-check label {
+            color: #475569;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        
+        .terms-check a {
+            color: #dc2626;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .terms-check a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Register Button */
+        .btn-register {
+            width: 100%;
+            padding: 16px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin: 25px 0;
+        }
+        
+        .btn-register:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.2);
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .divider::before {
+            margin-right: 15px;
+        }
+        
+        .divider::after {
+            margin-left: 15px;
+        }
+        
+        /* Social - Minimal */
+        .social-register {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #64748b;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .social-btn:hover {
+            border-color: #dc2626;
+            color: #dc2626;
+            background: #fef2f2;
+        }
+        
+        /* Links */
+        .login-link {
+            text-align: center;
+            margin: 15px 0 10px;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        .login-link a {
+            color: #dc2626;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-home {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .back-home a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        
+        .back-home a:hover {
+            color: #dc2626;
+        }
+        
+        /* Alert */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border-left-color: #22c55e;
+        }
+        
+        .alert-danger {
+            background: #fef2f2;
+            color: #991b1b;
+            border-left-color: #dc2626;
+        }
+        
+        /* Match message */
+        #passwordMatchMsg {
+            font-size: 0.85rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive for smaller screens */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            .container-custom {
+                max-width: 100%;
+            }
+            
+            .register-card {
+                padding: 30px 25px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 25px 20px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .social-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Remove autofill background */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0px 1000px #fafbfc inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-custom">
+        <div class="register-card">
+            
+            <!-- Header with Red Heart -->
+            <div class="text-center">
+                <div class="heart-icon">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </div>
+                <h2 class="title">Create account</h2>
+                <p class="subtitle">Join HeartGuard AI to monitor your heart health</p>
+            </div>
+            
+            <!-- Register Form -->
+            <form method="POST" id="registerForm" onsubmit="return validateForm()">
+                <!-- Full Name -->
+                <div class="input-group-custom">
+                    <span class="input-icon"><i class="bi bi-person"></i></span>
+                    <input type="text" 
+                           name="name" 
+                           class="form-control-custom" 
+                           placeholder="Full name"
+                           id="fullName"
+                           required
+                           autocomplete="name">
+                </div>
+                
+                <!-- Email -->
+                <div class="input-group-custom">
+                    <span class="input-icon"><i class="bi bi-envelope"></i></span>
+                    <input type="email" 
+                           name="email" 
+                           class="form-control-custom" 
+                           placeholder="Email address"
+                           id="email"
+                           required
+                           autocomplete="email">
+                </div>
+                
+                <!-- Password with Toggle -->
+                <div class="input-group-custom">
+                    <span class="input-icon"><i class="bi bi-lock"></i></span>
+                    <input type="password" 
+                           name="password" 
+                           class="form-control-custom" 
+                           placeholder="Password"
+                           id="password"
+                           required
+                           autocomplete="new-password"
+                           minlength="6"
+                           onkeyup="checkPasswordStrength()">
+                    <button type="button" class="toggle-password" onclick="togglePassword()">
+                        <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                    </button>
+                </div>
+                
+                <!-- Password Strength Indicator (minimal) -->
+                <div class="password-strength" id="strengthIndicator" style="display: none;">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText"></div>
+                </div>
+                
+                <!-- Confirm Password -->
+                <div class="input-group-custom">
+                    <span class="input-icon"><i class="bi bi-shield-lock"></i></span>
+                    <input type="password" 
+                           name="confirm_password" 
+                           class="form-control-custom" 
+                           placeholder="Confirm password"
+                           id="confirmPassword"
+                           required
+                           autocomplete="off"
+                           onkeyup="checkPasswordMatch()">
+                </div>
+                
+                <!-- Password Match Message -->
+                <div id="passwordMatchMsg" style="color: #dc2626;"></div>
+                
+                <!-- Terms -->
+                <div class="terms-check">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <!-- Register Button -->
+                <button type="submit" class="btn-register">
+                    <i class="bi bi-person-plus"></i>
+                    Create account
+                </button>
+            </form>
+            
+            <!-- Divider -->
+            <div class="divider">or continue with</div>
+            
+            <!-- Social -->
+            <div class="social-register">
+                <a href="#" class="social-btn" title="Google">
+                    <i class="bi bi-google"></i>
+                </a>
+                <a href="#" class="social-btn" title="Facebook">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="#" class="social-btn" title="Apple">
+                    <i class="bi bi-apple"></i>
+                </a>
+            </div>
+            
+            <!-- Login Link -->
+            <div class="login-link">
+                Already have an account? <a href="/login">Sign in</a>
+            </div>
+            
+            <!-- Back to Home -->
+            <div class="back-home">
+                <a href="/">
+                    <i class="bi bi-arrow-left"></i>
+                    Back to home
+                </a>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('bi-eye-slash');
+                toggleIcon.classList.add('bi-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('bi-eye');
+                toggleIcon.classList.add('bi-eye-slash');
+            }
+        }
+        
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthIndicator = document.getElementById('strengthIndicator');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            if (password.length > 0) {
+                strengthIndicator.style.display = 'block';
+                
+                let strength = 0;
+                
+                if (password.length >= 8) strength += 25;
+                if (password.match(/[a-z]/)) strength += 25;
+                if (password.match(/[A-Z]/)) strength += 25;
+                if (password.match(/[0-9]/)) strength += 25;
+                if (password.match(/[^a-zA-Z0-9]/)) strength += 25;
+                
+                strength = Math.min(strength, 100);
+                
+                strengthFill.style.width = strength + '%';
+                
+                if (strength < 40) {
+                    strengthFill.style.background = '#dc2626';
+                    strengthText.textContent = 'Weak';
+                    strengthText.style.color = '#dc2626';
+                } else if (strength < 70) {
+                    strengthFill.style.background = '#f59e0b';
+                    strengthText.textContent = 'Medium';
+                    strengthText.style.color = '#f59e0b';
+                } else {
+                    strengthFill.style.background = '#22c55e';
+                    strengthText.textContent = 'Strong';
+                    strengthText.style.color = '#22c55e';
+                }
+            } else {
+                strengthIndicator.style.display = 'none';
+            }
+            
+            checkPasswordMatch();
+        }
+        
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const matchMsg = document.getElementById('passwordMatchMsg');
+            
+            if (confirmPassword.length > 0) {
+                if (password === confirmPassword) {
+                    matchMsg.textContent = '✓ Passwords match';
+                    matchMsg.style.color = '#22c55e';
+                } else {
+                    matchMsg.textContent = '✗ Passwords do not match';
+                    matchMsg.style.color = '#dc2626';
+                }
+            } else {
+                matchMsg.textContent = '';
+            }
+        }
+        
+        function validateForm() {
+            const name = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return false;
+            }
+            
+            if (name.length < 3) {
+                alert('Name must be at least 3 characters');
+                return false;
+            }
+            
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert('Please enter a valid email');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters');
+                return false;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return false;
+            }
+            
+            if (!terms) {
+                alert('Please agree to Terms & Conditions');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Clear form on refresh
+        window.onload = function() {
+            document.getElementById('registerForm').reset();
+        };
+        
+        // Email validation hint
+        document.getElementById('email').addEventListener('input', function(e) {
+            const email = e.target.value;
+            const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email.length > 0) {
+                e.target.style.borderColor = pattern.test(email) ? '#22c55e' : '#dc2626';
+            } else {
+                e.target.style.borderColor = '#e2e8f0';
+            }
+        });
+    </script>
+    
+</body>
+</html>

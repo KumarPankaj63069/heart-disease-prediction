@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Heart Disease Prediction - Dashboard</title>
+    
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* ========== NAVBAR - 100% WIDTH ========== */
+        .navbar-custom {
+            background: white;
+            padding: 10px 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+        
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        /* Logo Area */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        
+        .heart-icon {
+            color: #dc2626;
+            font-size: 1.4rem;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            35% { transform: scale(1); }
+            45% { transform: scale(1.05); }
+            55% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        .brand-text {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            white-space: nowrap;
+        }
+        
+        .brand-text span {
+            color: #dc2626;
+        }
+        
+        /* User Info - 100% width on mobile */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            flex: 1;
+            min-width: min(180px, 100%);
+        }
+        
+        .welcome-text {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-weight: 500;
+            color: #475569;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            background: #f8fafc;
+            padding: 4px 8px;
+            border-radius: 30px;
+            border: 1px solid #edf2f7;
+            width: auto;
+        }
+        
+        .welcome-greeting {
+            white-space: nowrap;
+            color: #64748b;
+        }
+        
+        .username {
+            color: #dc2626;
+            font-weight: 600;
+            white-space: nowrap;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: #fee2e2;
+            padding: 2px 6px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+        
+        .wave-emoji {
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        /* Logout Button */
+        .btn-logout {
+            background: white;
+            color: #dc2626;
+            border: 1.5px solid #fee2e2;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .btn-logout i {
+            font-size: 0.8rem;
+        }
+        
+        .logout-text {
+            display: none;
+        }
+        
+        .logout-icon-text {
+            display: inline;
+        }
+        
+        .btn-logout:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+        
+        /* Tablet */
+        @media (min-width: 480px) {
+            .navbar-custom {
+                padding: 12px 20px;
+            }
+            
+            .logo-area {
+                gap: 8px;
+            }
+            
+            .heart-icon {
+                font-size: 1.6rem;
+            }
+            
+            .brand-text {
+                font-size: 1.2rem;
+            }
+            
+            .user-info {
+                gap: 10px;
+            }
+            
+            .welcome-text {
+                font-size: 0.85rem;
+                padding: 4px 12px;
+            }
+            
+            .username {
+                max-width: 120px;
+                font-size: 0.8rem;
+            }
+            
+            .btn-logout {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Desktop */
+        @media (min-width: 768px) {
+            .navbar-custom {
+                padding: 16px 30px;
+            }
+            
+            .logo-area {
+                gap: 12px;
+            }
+            
+            .heart-icon {
+                font-size: 1.8rem;
+            }
+            
+            .brand-text {
+                font-size: 1.4rem;
+            }
+            
+            .user-info {
+                gap: 20px;
+            }
+            
+            .welcome-text {
+                font-size: 1rem;
+                gap: 6px;
+                padding: 6px 16px;
+                background: transparent;
+                border: none;
+            }
+            
+            .welcome-greeting {
+                color: #475569;
+            }
+            
+            .username {
+                max-width: 200px;
+                font-size: 1rem;
+                background: transparent;
+                padding: 0;
+                color: #dc2626;
+            }
+            
+            .wave-emoji {
+                font-size: 1rem;
+            }
+            
+            .btn-logout {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+                gap: 8px;
+            }
+            
+            .logout-text {
+                display: inline;
+            }
+            
+            .logout-icon-text {
+                display: none;
+            }
+        }
+        
+        /* Large Desktop */
+        @media (min-width: 1200px) {
+            .username {
+                max-width: 300px;
+            }
+        }
+        
+        /* Very Small Mobile */
+        @media (max-width: 359px) {
+            .navbar-content {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .welcome-text {
+                font-size: 0.7rem;
+                padding: 3px 6px;
+            }
+            
+            .username {
+                max-width: 70px;
+                font-size: 0.7rem;
+            }
+            
+            .btn-logout {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* ========== MAIN CONTAINER - 100% WIDTH ========== */
+        .dashboard-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 15px 0;
+            padding: 0 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .dashboard-container {
+                margin: 30px 0;
+                padding: 0 30px;
+            }
+        }
+        
+        /* Welcome Banner - 100% width */
+        .welcome-banner {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .welcome-banner {
+                border-radius: 24px;
+                padding: 30px 35px;
+                margin-bottom: 30px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+        
+        .banner-title {
+            width: 100%;
+        }
+        
+        .banner-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        @media (min-width: 768px) {
+            .banner-title h1 {
+                font-size: 2rem;
+                margin-bottom: 8px;
+            }
+        }
+        
+        .banner-title p {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        
+        @media (min-width: 768px) {
+            .banner-title p {
+                font-size: 1rem;
+            }
+        }
+        
+        .banner-stats {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            justify-content: space-around;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .banner-stats {
+                gap: 30px;
+                padding: 15px 25px;
+                border-radius: 50px;
+                width: auto;
+                min-width: 400px;
+            }
+        }
+        
+        .stat-item {
+            text-align: center;
+            width: 100%;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #dc2626;
+        }
+        
+        @media (min-width: 768px) {
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        @media (min-width: 768px) {
+            .stat-label {
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
+            }
+        }
+        
+        /* Two Column Layout - 100% width */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1.2fr;
+                gap: 25px;
+            }
+        }
+        
+        @media (min-width: 1400px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1.5fr;
+            }
+        }
+        
+        /* Test Card - 100% width */
+        .test-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #edf2f7;
+            height: fit-content;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .test-card {
+                border-radius: 24px;
+                padding: 30px;
+            }
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: #fee2e2;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        @media (min-width: 768px) {
+            .card-icon {
+                width: 60px;
+                height: 60px;
+                border-radius: 18px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        .card-icon i {
+            font-size: 1.6rem;
+            color: #dc2626;
+        }
+        
+        @media (min-width: 768px) {
+            .card-icon i {
+                font-size: 2rem;
+            }
+        }
+        
+        .test-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+        
+        @media (min-width: 768px) {
+            .test-card h3 {
+                font-size: 1.5rem;
+                margin-bottom: 8px;
+            }
+        }
+        
+        .test-card p {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+        
+        @media (min-width: 768px) {
+            .test-card p {
+                margin-bottom: 25px;
+                line-height: 1.6;
+                font-size: 1rem;
+            }
+        }
+        
+        .btn-start {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        @media (min-width: 768px) {
+            .btn-start {
+                padding: 16px 30px;
+                border-radius: 16px;
+                font-size: 1rem;
+                gap: 12px;
+            }
+        }
+        
+        .btn-start:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+        }
+        
+        /* Features List */
+        .features-list {
+            margin-top: 20px;
+            border-top: 1px solid #edf2f7;
+            padding-top: 15px;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .features-list {
+                margin-top: 25px;
+                padding-top: 20px;
+            }
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            color: #475569;
+            font-size: 0.85rem;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .feature-item {
+                gap: 12px;
+                padding: 10px 0;
+                font-size: 0.95rem;
+            }
+        }
+        
+        .feature-item i {
+            color: #22c55e;
+            font-size: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .feature-item i {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* History Card - 100% width */
+        .history-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #edf2f7;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .history-card {
+                border-radius: 24px;
+                padding: 30px;
+            }
+        }
+        
+        .history-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .history-header {
+                flex-direction: row;
+                align-items: center;
+                margin-bottom: 25px;
+                gap: 15px;
+            }
+        }
+        
+        .history-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        @media (min-width: 768px) {
+            .history-header h3 {
+                font-size: 1.3rem;
+                gap: 10px;
+            }
+        }
+        
+        .history-header h3 i {
+            color: #dc2626;
+        }
+        
+        .badge-count {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        @media (min-width: 768px) {
+            .badge-count {
+                padding: 5px 12px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* Table - 100% width */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid #edf2f7;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .table-container {
+                border-radius: 18px;
+            }
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            table {
+                min-width: 100%;
+            }
+        }
+        
+        th {
+            background: #f8fafc;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.8rem;
+            border-bottom: 2px solid #edf2f7;
+        }
+        
+        @media (min-width: 768px) {
+            th {
+                padding: 16px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        td {
+            padding: 12px 15px;
+            color: #475569;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 0.85rem;
+        }
+        
+        @media (min-width: 768px) {
+            td {
+                padding: 16px 20px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover td {
+            background: #f8fafc;
+        }
+        
+        .result-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        @media (min-width: 768px) {
+            .result-badge {
+                padding: 4px 12px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        .result-positive {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .result-negative {
+            background: #dcfce7;
+            color: #22c55e;
+        }
+        
+        .no-history {
+            text-align: center;
+            padding: 30px 15px;
+            color: #94a3b8;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .no-history {
+                padding: 40px 20px;
+            }
+        }
+        
+        .no-history i {
+            font-size: 2.5rem;
+            color: #e2e8f0;
+            margin-bottom: 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .no-history i {
+                font-size: 3rem;
+                margin-bottom: 15px;
+            }
+        }
+        
+        .no-history p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer Note - 100% width */
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px 0;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            border-top: 1px solid #edf2f7;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-note {
+                margin-top: 30px;
+                padding: 20px 0;
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* Touch friendly */
+        a, button, .btn-start, .btn-logout {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== NAVBAR - FIXED WITH WELCOME MESSAGE ========== -->
+    <nav class="navbar-custom">
+        <div class="navbar-content">
+            <div class="logo-area">
+                <div class="heart-icon">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </div>
+                <div class="brand-text">
+                    Heart<span> Disease</span> Prediction
+                </div>
+            </div>
+            
+            <div class="user-info">
+                <span class="welcome-text">
+                    <span class="welcome-greeting">Welcome</span>
+                    <strong class="username">{{ user }}</strong>
+                    <span class="wave-emoji">👋</span>
+                </span>
+                <a href="/logout" class="btn-logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span class="logout-text">Logout</span>
+                    <span class="logout-icon-text">Exit</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        
+        <!-- Welcome Banner with Stats -->
+        <div class="welcome-banner">
+            <div class="banner-title">
+                <h1>Heart Disease Prediction Dashboard</h1>
+                <p>Monitor your heart health and track your progress</p>
+            </div>
+            <div class="banner-stats">
+                <div class="stat-item">
+                    <div class="stat-value">
+                        {% if history %}
+                            {{ history|length }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </div>
+                    <div class="stat-label">Total Tests</div>
+                </div>
+               <div class="stat-item">
+    <div class="stat-value">
+        {% if history %}
+            {% set ns = namespace(risk_count=0) %}
+
+            {% for row in history %}
+                {% if 'Risk' in row[1] %}
+                    {% set ns.risk_count = ns.risk_count + 1 %}
+                {% endif %}
+            {% endfor %}
+
+            {{ ns.risk_count }}
+        {% else %}
+            0
+        {% endif %}
+    </div>
+    <div class="stat-label">Risk Cases</div>
+</div>
+                <div class="stat-item">
+                    <div class="stat-value">
+                        {% if history %}
+                            {{ history[-1][0] }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                    <div class="stat-label">Last Test</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Grid - Test & History Side by Side -->
+        <div class="dashboard-grid">
+            
+            <!-- Left Column - Test Card -->
+            <div class="test-card">
+                <div class="card-icon">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+                <h3>Heart Disease Test</h3>
+                <p>Take our AI-powered assessment to evaluate your heart health risk. The test analyzes multiple factors including age, cholesterol, blood pressure, and more.</p>
+                
+                <a href="/test" class="btn-start">
+                    <i class="bi bi-play-circle"></i>
+                    Start New Test
+                </a>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>95% accuracy rate</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Takes only 2-3 minutes</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Instant results with insights</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - History Card -->
+            <div class="history-card">
+                <div class="history-header">
+                    <h3>
+                        <i class="bi bi-clock-history"></i>
+                        Test History
+                    </h3>
+                    <span class="badge-count">
+                        <i class="bi bi-file-text"></i>
+                        {% if history %}
+                            {{ history|length }} records
+                        {% else %}
+                            No records
+                        {% endif %}
+                    </span>
+                </div>
+                
+                {% if history %}
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Age</th>
+                                <th>Result</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in history %}
+                            <tr>
+                                <td>
+                                    <strong>{{ row[0] }}</strong>
+                                    <div style="font-size: 0.7rem; color: #94a3b8;">{{ row[2] if row|length > 2 else 'Recent' }}</div>
+                                </td>
+                                <td>
+                                    <span class="result-badge {% if 'Risk' in row[1] %}result-positive{% else %}result-negative{% endif %}">
+                                        {{ row[1] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if 'Risk' in row[1] %}
+                                    <i class="bi bi-exclamation-triangle-fill" style="color: #dc2626; font-size: 1rem;" title="Consult doctor"></i>
+                                    {% else %}
+                                    <i class="bi bi-check-circle-fill" style="color: #22c55e; font-size: 1rem;" title="Healthy"></i>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- View All Link -->
+                <div style="text-align: right; margin-top: 12px; width: 100%;">
+                    <a href="/history" style="color: #dc2626; text-decoration: none; font-size: 0.8rem; font-weight: 500;">
+                        View all tests <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                
+                {% else %}
+                <div class="no-history">
+                    <i class="bi bi-clipboard-x"></i>
+                    <p>No test history found</p>
+                    <p style="font-size: 0.8rem; margin-top: 8px;">Take your first test to see results here</p>
+                </div>
+                {% endif %}
+                
+                <!-- Quick Tips -->
+                {% if history %}
+                <div style="margin-top: 15px; padding-top: 12px; border-top: 1px dashed #edf2f7; width: 100%;">
+                    <p style="font-size: 0.75rem; color: #64748b; margin: 0;">
+                        <i class="bi bi-info-circle" style="color: #dc2626;"></i>
+                        Regular monitoring helps detect issues early. Take tests monthly.
+                    </p>
+                </div>
+                {% endif %}
+                
+            </div>
+        </div>
+        
+        <!-- Footer Note -->
+        <div class="footer-note">
+            <i class="bi bi-shield-check me-1"></i>
+            Your data is secure and encrypted. For medical emergencies, consult a doctor immediately.
+        </div>
+        
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Smooth scrolling -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+{% include 'footer.html' %}
+</body>
+</html>

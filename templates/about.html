@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartPredict - About Us</title>
+    
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Main content - Full Width */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            padding: 40px 0;
+        }
+        
+        /* About Card - Full Width */
+        .about-card {
+            background: white;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* Header - Full Width */
+        .about-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .about-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .about-header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin: 0;
+        }
+        
+        .about-header i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Section - Full Width */
+        .section {
+            padding: 60px 40px;
+            border-bottom: 1px solid #eee;
+            width: 100%;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        /* Container for content */
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .section-row {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .section-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .section-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .section-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .section-image img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Right side image */
+        .row-right .section-image {
+            order: 2;
+        }
+        
+        .row-right .section-content {
+            order: 1;
+        }
+        
+        /* Left side image */
+        .row-left .section-image {
+            order: 1;
+        }
+        
+        .row-left .section-content {
+            order: 2;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title i {
+            color: #667eea;
+            font-size: 2.2rem;
+        }
+        
+        /* Lists */
+        .step-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            flex: 1;
+        }
+        
+        .step-text h5 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .step-text p {
+            color: #666;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* Input Guide */
+        .input-guide {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .guide-item {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .guide-item strong {
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1.1rem;
+        }
+        
+        .guide-item span {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: block;
+        }
+        
+        /* Result Cards */
+        .result-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .result-card {
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .result-card.risk {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+        }
+        
+        .result-card.safe {
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .result-card i {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .result-card.risk i {
+            color: #dc2626;
+        }
+        
+        .result-card.safe i {
+            color: #16a34a;
+        }
+        
+        .result-card h4 {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .result-card.risk h4 {
+            color: #991b1b;
+        }
+        
+        .result-card.safe h4 {
+            color: #166534;
+        }
+        
+        .result-card p {
+            color: #666;
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        /* Note Box */
+        .note-box {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 10px;
+            padding: 25px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            width: 100%;
+        }
+        
+        .note-box i {
+            color: #856404;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .note-box p {
+            color: #856404;
+            margin: 0;
+            flex: 1;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .note-box strong {
+            font-weight: 600;
+        }
+        
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+        
+        /* Laptop (992px - 1200px) */
+        @media (max-width: 1200px) {
+            .section-row {
+                gap: 40px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Tablet (768px - 991px) */
+        @media (max-width: 991px) {
+            .section {
+                padding: 40px 30px;
+            }
+            
+            .section-row {
+                gap: 30px;
+            }
+            
+            .section-content, .section-image {
+                min-width: 280px;
+            }
+            
+            .input-guide {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .about-header h1 {
+                font-size: 2.4rem;
+            }
+        }
+        
+        /* Mobile Landscape (576px - 767px) */
+        @media (max-width: 767px) {
+            .about-header {
+                padding: 30px 15px;
+            }
+            
+            .about-header h1 {
+                font-size: 2rem;
+            }
+            
+            .about-header p {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 30px 20px;
+            }
+            
+            .section-row {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .row-right .section-image,
+            .row-left .section-image {
+                order: 0;
+            }
+            
+            .section-content, .section-image {
+                min-width: 100%;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+            
+            .section-title i {
+                font-size: 1.8rem;
+            }
+            
+            .step-item {
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .step-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .step-text h5 {
+                font-size: 1rem;
+            }
+            
+            .step-text p {
+                font-size: 0.9rem;
+            }
+            
+            .guide-item {
+                padding: 15px;
+            }
+            
+            .guide-item strong {
+                font-size: 1rem;
+            }
+            
+            .guide-item span {
+                font-size: 0.9rem;
+            }
+            
+            .result-card {
+                padding: 20px;
+            }
+            
+            .result-card h4 {
+                font-size: 1.2rem;
+            }
+            
+            .result-card p {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Mobile Portrait (below 576px) */
+        @media (max-width: 575px) {
+            .about-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .about-header i {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 1.4rem;
+                gap: 8px;
+            }
+            
+            .section-title i {
+                font-size: 1.6rem;
+            }
+            
+            .step-item {
+                gap: 12px;
+            }
+            
+            .step-number {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            
+            .input-guide {
+                gap: 15px;
+            }
+            
+            .guide-item {
+                padding: 12px;
+            }
+            
+            .note-box {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .note-box i {
+                font-size: 1.8rem;
+                margin-bottom: 10px;
+            }
+            
+            .note-box p {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Small Mobile (below 400px) */
+        @media (max-width: 399px) {
+            .about-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .step-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .step-number {
+                margin-bottom: 5px;
+            }
+            
+            .guide-item strong {
+                font-size: 0.95rem;
+            }
+            
+            .guide-item span {
+                font-size: 0.85rem;
+            }
+            
+            .result-card {
+                padding: 15px;
+            }
+            
+            .result-card i {
+                font-size: 2rem;
+            }
+            
+            .result-card h4 {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Image responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar Include -->
+    {% include 'navbar.html' %}
+
+    <div class="main-content">
+            
+        <div class="about-card">
+            
+            <!-- Header -->
+            <div class="about-header">
+                <i class="bi bi-heart-pulse-fill"></i>
+                <h1>About HeartPredict</h1>
+                <p>AI-Powered Heart Disease Prediction System</p>
+            </div>
+            
+            <!-- Section 1: What is this? (Image Right) -->
+            <div class="section">
+                <div class="section-container">
+                    <div class="section-row row-right">
+                        <div class="section-content">
+                            <div class="section-title">
+                                <i class="bi bi-question-circle"></i>
+                                <h3>What is HeartPredict?</h3>
+                            </div>
+                            <p style="font-size: 1.1rem; color: #555; line-height: 1.6;">
+                                HeartPredict is a Machine Learning based web application that predicts 
+                                whether a person is at risk of heart disease. It uses medical parameters 
+                                and trained ML models to give accurate results with 95% accuracy.
+                            </p>
+                            <p style="color: #666; margin-top: 20px; line-height: 1.6;">
+                                Our system analyzes multiple health factors to provide instant risk assessment 
+                                and help you take proactive steps for your heart health.
+                            </p>
+                        </div>
+                        <div class="section-image">
+                            <img src="{{ url_for('static', filename='images/heart.png') }}" 
+                                 alt="Heart Disease Prediction"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 2: How to Use (Image Left) -->
+            <div class="section">
+                <div class="section-container">
+                    <div class="section-row row-left">
+                        <div class="section-image">
+                            <img src="{{ url_for('static', filename='images/steps.jpeg') }}"
+                                 alt="How To Use"
+                                 loading="lazy">
+                        </div>
+                        <div class="section-content">
+                            <div class="section-title">
+                                <i class="bi bi-gear"></i>
+                                <h3>How to Use</h3>
+                            </div>
+                            
+                            <div class="step-list">
+                                <div class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div class="step-text">
+                                        <h5>Create Account</h5>
+                                        <p>Register with your email and create a secure account</p>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div class="step-text">
+                                        <h5>Login to Dashboard</h5>
+                                        <p>Access your personal health dashboard</p>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div class="step-text">
+                                        <h5>Start Test</h5>
+                                        <p>Click on "Start Test" to begin assessment</p>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">4</div>
+                                    <div class="step-text">
+                                        <h5>Enter Details</h5>
+                                        <p>Fill in your medical parameters</p>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">5</div>
+                                    <div class="step-text">
+                                        <h5>Get Results</h5>
+                                        <p>Receive instant prediction with insights</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 3: Input Details (Image Right) -->
+            <div class="section">
+                <div class="section-container">
+                    <div class="section-row row-right">
+                        <div class="section-content">
+                            <div class="section-title">
+                                <i class="bi bi-pencil-square"></i>
+                                <h3>Input Details</h3>
+                            </div>
+                            <p style="color: #666; margin-bottom: 25px;">
+                                Fill these medical parameters for accurate prediction:
+                            </p>
+                            
+                            <div class="input-guide">
+                                <div class="guide-item">
+                                    <strong>Age</strong>
+                                    <span>Your age in years</span>
+                                </div>
+                                <div class="guide-item">
+                                    <strong>Gender</strong>
+                                    <span>Male (1) / Female (0)</span>
+                                </div>
+                                <div class="guide-item">
+                                    <strong>Chest Pain</strong>
+                                    <span>Type 0, 1, 2, or 3</span>
+                                </div>
+                                <div class="guide-item">
+                                    <strong>Blood Pressure</strong>
+                                    <span>Resting BP (mm Hg)</span>
+                                </div>
+                                <div class="guide-item">
+                                    <strong>Cholesterol</strong>
+                                    <span>Serum cholesterol (mg/dl)</span>
+                                </div>
+                                <div class="guide-item">
+                                    <strong>Fasting Sugar</strong>
+                                    <span>>120 mg/dl (1) or ≤120 (0)</span>
+                                </div>
+                                <div class="guide-item">
+                                    <strong>Max Heart Rate</strong>
+                                    <span>Maximum heart rate achieved</span>
+                                </div>
+                                <div class="guide-item">
+                                    <strong>Exercise Angina</strong>
+                                    <span>Yes (1) / No (0)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-image">
+                            <img src="{{ url_for('static', filename='images/inputs.jpeg') }}" 
+                                 alt="Input Details"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4: Result Meaning (Image Left) -->
+            <div class="section">
+                <div class="section-container">
+                    <div class="section-row row-left">
+                        <div class="section-image">
+                            <img src="{{ url_for('static', filename='images/results.jpeg') }}" 
+                                 alt="Results"
+                                 loading="lazy">
+                        </div>
+                        <div class="section-content">
+                            <div class="section-title">
+                                <i class="bi bi-graph-up"></i>
+                                <h3>Result Meaning</h3>
+                            </div>
+                            
+                            <div class="result-cards">
+                                <div class="result-card risk">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    <h4>High Risk</h4>
+                                    <p>You may have heart disease. Consult a doctor immediately.</p>
+                                </div>
+                                <div class="result-card safe">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <h4>No Disease</h4>
+                                    <p>You are likely healthy. Continue regular checkups.</p>
+                                </div>
+                            </div>
+                            
+                            <p style="color: #666; margin-top: 25px;">
+                                Our model provides instant prediction with 95% accuracy based on your inputs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Note Section -->
+            <div class="section">
+                <div class="section-container">
+                    <div class="note-box">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <p>
+                            <strong>Medical Disclaimer:</strong> This is a prediction system for informational purposes only. 
+                            It is not a substitute for professional medical advice, diagnosis, or treatment. 
+                            Always consult a qualified healthcare provider for medical concerns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+            
+    </div>
+
+    {% include 'footer.html' %}
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
