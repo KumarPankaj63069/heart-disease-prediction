@@ -10,12 +10,15 @@ app.secret_key = "secret123"
 model = pickle.load(open("model.pkl", "rb"))
 features_name = pickle.load(open("features.pkl", "rb"))
 
-# ================= DATABASE =================
+# ================= DATABASE FUNCTION =================
+def get_db():
+    return sqlite3.connect("database.db", timeout=10, check_same_thread=False)
+
+# ================= INIT DB =================
 def init_db():
-    conn = sqlite3.connect("database.db")
+    conn = get_db()
     cur = conn.cursor()
 
-    # Users table
     cur.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,7 +28,6 @@ def init_db():
     )
     """)
 
-    # History table
     cur.execute("""
     CREATE TABLE IF NOT EXISTS history (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,25 +47,21 @@ init_db()
 def home():
     return render_template("home.html")
 
-
 # ================= REGISTER =================
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        password = request.form["password"]
-
         try:
-            conn = sqlite3.connect("database.db")
+            conn = get_db()
             cur = conn.cursor()
 
-            cur.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                        (name, email, password))
+            cur.execute(
+                "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+                (request.form["name"], request.form["email"], request.form["password"])
+            )
 
             conn.commit()
             conn.close()
-
             return redirect("/login")
 
         except:
@@ -71,72 +69,69 @@ def register():
 
     return render_template("register.html")
 
-
 # ================= LOGIN =================
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
-
-        conn = sqlite3.connect("database.db")
+        conn = get_db()
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM users WHERE email=? AND password=?", (email, password))
+        cur.execute(
+            "SELECT * FROM users WHERE email=? AND password=?",
+            (request.form["email"], request.form["password"])
+        )
         user = cur.fetchone()
-
         conn.close()
 
         if user:
-            # 👉 IMPORTANT: email store karo (history ke liye)
-            session["user"] = user[1]   # name
-            session["email"] = user[2]  # email
-
+            session["user"] = user[1]
+            session["email"] = user[2]
             return redirect("/dashboard")
         else:
             return "Invalid Email or Password"
 
     return render_template("login.html")
 
-
 # ================= DASHBOARD =================
 @app.route("/dashboard")
 def dashboard():
     if "user" in session:
-
-        conn = sqlite3.connect("database.db")
+        conn = get_db()
         cur = conn.cursor()
 
-        # 👉 history fetch
-        cur.execute("SELECT age, result FROM history WHERE user_email=?", (session["email"],))
+        cur.execute(
+            "SELECT age, result FROM history WHERE user_email=?",
+            (session["email"],)
+        )
         history = cur.fetchall()
-
         conn.close()
 
         return render_template("dashboard.html", user=session["user"], history=history)
 
     return redirect("/login")
-# ================= View All History =================
+
+# ================= HISTORY PAGE =================
 @app.route("/history")
 def history_page():
     if "user" in session:
-
-        conn = sqlite3.connect("database.db")
+        conn = get_db()
         cur = conn.cursor()
 
-        cur.execute("SELECT age, result FROM history WHERE user_email=?", (session["email"],))
+        cur.execute(
+            "SELECT age, result FROM history WHERE user_email=?",
+            (session["email"],)
+        )
         history = cur.fetchall()
-
         conn.close()
 
         return render_template("history.html", history=history, user=session["user"])
 
     return redirect("/login")
-# ================= About  =================
+
+# ================= ABOUT =================
 @app.route("/about")
 def about():
     return render_template("about.html")
-
 
 # ================= TEST PAGE =================
 @app.route("/test")
@@ -144,7 +139,6 @@ def test():
     if "user" in session:
         return render_template("index.html")
     return redirect("/login")
-
 
 # ================= PREDICTION =================
 @app.route("/predict", methods=["POST"])
@@ -162,13 +156,13 @@ def predict():
 
         prediction = model.predict(final)
 
-        if prediction[0] == 0:
+        if prediction[0] == 1:
             result = "⚠️ High Risk of Heart Disease"
         else:
             result = "✅ No Heart Disease"
 
-        # 👉 SAVE HISTORY
-        conn = sqlite3.connect("database.db")
+        # SAVE HISTORY
+        conn = get_db()
         cur = conn.cursor()
 
         cur.execute(
@@ -184,13 +178,11 @@ def predict():
     except Exception as e:
         return f"Error: {str(e)}"
 
-
 # ================= LOGOUT =================
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/login")
-
 
 # ================= RUN =================
 if __name__ == "__main__":
