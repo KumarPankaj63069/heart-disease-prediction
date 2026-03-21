@@ -149,13 +149,24 @@ def predict():
     try:
         data = {}
 
+        # 🔥 Ensure correct feature order
         for name in features_name:
-            data[name] = float(request.form.get(name, 0))
+            value = request.form.get(name)
 
-        final = [list(data.values())]
+            if value is None or value == "":
+                data[name] = 0
+            else:
+                data[name] = float(value)
+
+        final = np.array([list(data.values())])
 
         prediction = model.predict(final)
 
+        # 🔥 DEBUG (remove later)
+        print("Input Data:", data)
+        print("Prediction Value:", prediction[0])
+
+        # 🔥 Correct mapping
         if prediction[0] == 1:
             result = "⚠️ High Risk of Heart Disease"
         else:
@@ -167,7 +178,7 @@ def predict():
 
         cur.execute(
             "INSERT INTO history (user_email, age, result) VALUES (?, ?, ?)",
-            (session["email"], data.get("age"), result)
+            (session["email"], data.get("age", 0), result)
         )
 
         conn.commit()
