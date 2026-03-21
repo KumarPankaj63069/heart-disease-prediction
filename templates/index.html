@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HeartGuard AI - Heart Test</title>
+    <title>HeartPredict - Heart Test</title>
     
     <!-- Bootstrap 5 + Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
         body {
@@ -148,10 +145,9 @@
         
         .progress-fill {
             height: 100%;
-            width: 0%;
+            width: 100%;
             background: linear-gradient(90deg, #dc2626, #ef4444);
             border-radius: 10px;
-            transition: width 0.3s ease;
         }
         
         /* Form Card */
@@ -215,6 +211,14 @@
             margin-left: 4px;
         }
         
+        .hint-text {
+            display: block;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 4px;
+            margin-left: 4px;
+        }
+        
         .form-control-custom {
             width: 100%;
             padding: 14px 16px;
@@ -230,10 +234,6 @@
             border-color: #dc2626;
             background: white;
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-        }
-        
-        .form-control-custom:hover {
-            border-color: #94a3b8;
         }
         
         select.form-control-custom {
@@ -397,23 +397,6 @@
         }
         
         /* Responsive */
-        
-        /* TV Screens (1200px+) */
-        @media (min-width: 1200px) {
-            .test-container {
-                max-width: 1000px;
-            }
-            
-            .form-card {
-                padding: 45px 50px;
-            }
-            
-            .form-title h2 {
-                font-size: 2rem;
-            }
-        }
-        
-        /* Tablet (768px - 991px) */
         @media (max-width: 991px) {
             .form-grid {
                 grid-template-columns: 1fr;
@@ -429,7 +412,6 @@
             }
         }
         
-        /* Mobile (below 768px) */
         @media (max-width: 767px) {
             body {
                 padding: 15px 10px;
@@ -442,10 +424,6 @@
             .navbar-content {
                 flex-direction: column;
                 align-items: flex-start;
-            }
-            
-            .progress-section {
-                padding: 20px 15px;
             }
             
             .form-card {
@@ -481,24 +459,13 @@
             }
         }
         
-        /* Small Mobile (below 480px) */
         @media (max-width: 480px) {
             .progress-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
-            .form-control-custom {
-                padding: 12px 14px;
-            }
-            
-            .tooltip-text {
-                white-space: normal;
-                width: 150px;
-            }
         }
         
-        /* Remove spinners from number inputs */
         input[type=number]::-webkit-inner-spin-button,
         input[type=number]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -506,22 +473,13 @@
         }
         
         input[type=number] {
-        -moz-animation:textfield;
-        }
-        
-        /* Validation styles */
-        .form-control-custom:invalid:not(:placeholder-shown) {
-            border-color: #dc2626;
-        }
-        
-        .form-control-custom:valid:not(:placeholder-shown) {
-            border-color: #22c55e;
+            -moz-appearance: textfield;
         }
     </style>
 </head>
 <body>
 
-    <!-- Simple Navbar -->
+    <!-- Navbar -->
     <div class="navbar-custom">
         <div class="navbar-content">
             <div class="logo-area">
@@ -529,7 +487,7 @@
                     <i class="bi bi-heart-pulse-fill"></i>
                 </div>
                 <div class="brand-text">
-                    Heart<span>Disease</span> Predection
+                    Heart<span>Predict</span>
                 </div>
             </div>
             <a href="/dashboard" class="back-link">
@@ -554,7 +512,7 @@
                 </span>
             </div>
             <div class="progress-bar-container">
-                <div class="progress-fill" style="width: 100%;"></div>
+                <div class="progress-fill"></div>
             </div>
             <p style="color: #64748b; font-size: 0.9rem; margin-top: 12px; margin-bottom: 0;">
                 <i class="bi bi-info-circle me-1" style="color: #dc2626;"></i>
@@ -578,21 +536,17 @@
                             <i class="bi bi-calendar"></i>
                             Age
                             <span class="required-star">*</span>
-                            <span class="info-tooltip">
-                                <i class="bi bi-question-circle"></i>
-                                <span class="tooltip-text">Your age in years (20-100)</span>
-                            </span>
                         </label>
                         <div class="input-group-custom">
                             <input type="number" 
                                    class="form-control-custom" 
                                    name="age" 
                                    placeholder="e.g., 45"
-                                   min="20"
-                                   max="100"
+                                 
                                    required>
                             <span class="input-suffix">years</span>
                         </div>
+                       
                     </div>
                     
                     <!-- Gender -->
@@ -604,9 +558,11 @@
                         </label>
                         <select class="form-control-custom" name="sex" required>
                             <option value="" disabled selected>Select gender</option>
-                            <option value="1">Male</option>
-                            <option value="0">Female</option>
+                            <option value="0">Female (0)</option>
+                            <option value="1">Male(1) </option>
+                            
                         </select>
+                       
                     </div>
                     
                     <!-- Chest Pain Type -->
@@ -615,25 +571,22 @@
                             <i class="bi bi-heart"></i>
                             Chest Pain Type
                             <span class="required-star">*</span>
-                            <span class="info-tooltip">
-                                <i class="bi bi-question-circle"></i>
-                                <span class="tooltip-text">Type of chest pain experienced</span>
-                            </span>
                         </label>
                         <select class="form-control-custom" name="cp" required>
                             <option value="" disabled selected>Select chest pain type</option>
-                            <option value="0">Typical Angina (chest pain related to heart)</option>
-                            <option value="1">Atypical Angina (non-cardiac chest pain)</option>
-                            <option value="2">Non-anginal Pain (not related to heart)</option>
-                            <option value="3">Asymptomatic (no chest pain)</option>
+                            <option value="0"> (0) - Typical Angina (chest pain related to heart)</option>
+                            <option value="1"> (1) - Atypical Angina (non-cardiac chest pain)</option>
+                            <option value="2"> (2) - Non-anginal Pain (not related to heart)</option>
+                            <option value="3">(3) - Asymptomatic (no chest pain)</option>
                         </select>
+                      
                     </div>
                     
                     <!-- Blood Pressure -->
                     <div class="form-group">
                         <label class="form-label">
                             <i class="bi bi-speedometer2"></i>
-                            Resting BP
+                            Resting Blood Pressure
                             <span class="required-star">*</span>
                         </label>
                         <div class="input-group-custom">
@@ -641,11 +594,11 @@
                                    class="form-control-custom" 
                                    name="trestbps" 
                                    placeholder="e.g., 120"
-                                   min="80"
-                                   max="200"
+                                  
                                    required>
                             <span class="input-suffix">mm Hg</span>
                         </div>
+                      
                     </div>
                     
                     <!-- Cholesterol -->
@@ -660,32 +613,34 @@
                                    class="form-control-custom" 
                                    name="chol" 
                                    placeholder="e.g., 200"
-                                   min="100"
-                                   max="400"
+                                  
                                    required>
                             <span class="input-suffix">mg/dl</span>
                         </div>
+                        
                     </div>
                     
                     <!-- Fasting Blood Sugar -->
                     <div class="form-group">
                         <label class="form-label">
                             <i class="bi bi-cup-hot"></i>
-                            Fasting Sugar
+                            Fasting Blood Sugar
                             <span class="required-star">*</span>
                         </label>
                         <select class="form-control-custom" name="fbs" required>
-                            <option value="" disabled selected>Select</option>
-                            <option value="1">> 120 mg/dl (High)</option>
-                            <option value="0"><= 120 mg/dl (Normal)</option>
+                            <option value="" disabled selected>Select fasting sugar level</option>
+                             <option value="0">0 - No (<= 120 mg/dl) - Normal Sugar</option>
+                            <option value="1">1 - Yes (> 120 mg/dl) - High Sugar</option>
+                           
                         </select>
+                       
                     </div>
                     
                     <!-- Max Heart Rate -->
                     <div class="form-group">
                         <label class="form-label">
                             <i class="bi bi-activity"></i>
-                            Max Heart Rate
+                            Maximum Heart Rate
                             <span class="required-star">*</span>
                         </label>
                         <div class="input-group-custom">
@@ -693,25 +648,27 @@
                                    class="form-control-custom" 
                                    name="thalach" 
                                    placeholder="e.g., 150"
-                                   min="60"
-                                   max="220"
+                                  
                                    required>
                             <span class="input-suffix">bpm</span>
                         </div>
+                       
                     </div>
                     
                     <!-- Exercise Angina -->
                     <div class="form-group">
                         <label class="form-label">
                             <i class="bi bi-bicycle"></i>
-                            Exercise Angina
+                            Exercise Induced Angina
                             <span class="required-star">*</span>
                         </label>
                         <select class="form-control-custom" name="exang" required>
-                            <option value="" disabled selected>Select</option>
-                            <option value="1">Yes (chest pain during exercise)</option>
-                            <option value="0">No (no chest pain)</option>
+                            <option value="" disabled selected>Select angina status</option>
+                                    <option value="0">0 - No (no chest pain during exercise)</option>
+                            <option value="1">1 - Yes (chest pain during exercise)</option>
+                    
                         </select>
+                       
                     </div>
                     
                 </div>
@@ -748,7 +705,7 @@
                         <i class="bi bi-graph-up"></i>
                         <div>
                             <h6>95% Accuracy</h6>
-                            <p>AI-powered</p>
+                         
                         </div>
                     </div>
                 </div>
@@ -767,9 +724,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Form Validation Script -->
     <script>
-        // Form validation
         document.getElementById('testForm').addEventListener('submit', function(e) {
             const inputs = this.querySelectorAll('input[required], select[required]');
             let isValid = true;
@@ -789,16 +744,7 @@
             }
         });
         
-        // Real-time validation styling
         document.querySelectorAll('.form-control-custom').forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.value) {
-                    this.style.borderColor = '#22c55e';
-                } else {
-                    this.style.borderColor = '#e2e8f0';
-                }
-            });
-            
             input.addEventListener('blur', function() {
                 if (this.value && this.checkValidity()) {
                     this.style.borderColor = '#22c55e';
@@ -810,7 +756,6 @@
             });
         });
         
-        // Number input validation
         document.querySelectorAll('input[type="number"]').forEach(input => {
             input.addEventListener('change', function() {
                 const min = parseInt(this.min);
@@ -821,12 +766,6 @@
                 if (value > max) this.value = max;
             });
         });
-        
-        // Clear form on page load
-        window.onload = function() {
-            // Don't reset the form, but ensure all fields are clean
-            console.log('Test form loaded');
-        };
     </script>
     
 </body>
