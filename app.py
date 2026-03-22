@@ -10,11 +10,10 @@ app.secret_key = "secret123"
 model = pickle.load(open("model.pkl", "rb"))
 features_name = pickle.load(open("features.pkl", "rb"))
 
-# ================= DATABASE FUNCTION =================
+# ================= DATABASE =================
 def get_db():
     return sqlite3.connect("database.db", timeout=10, check_same_thread=False)
 
-# ================= INIT DB =================
 def init_db():
     conn = get_db()
     cur = conn.cursor()
@@ -110,7 +109,7 @@ def dashboard():
 
     return redirect("/login")
 
-# ================= HISTORY PAGE =================
+# ================= HISTORY =================
 @app.route("/history")
 def history_page():
     if "user" in session:
@@ -140,7 +139,6 @@ def test():
         return render_template("index.html")
     return redirect("/login")
 
-# ================= PREDICTION =================
 @app.route("/predict", methods=["POST"])
 def predict():
     if "user" not in session:
@@ -149,30 +147,32 @@ def predict():
     try:
         data = {}
 
-        # 🔥 Ensure correct feature order
+        # form data collect
         for name in features_name:
             value = request.form.get(name)
+            data[name] = float(value) if value else 0
 
-            if value is None or value == "":
-                data[name] = 0
-            else:
-                data[name] = float(value)
+        # 🔥 FIXED ORDER (MOST IMPORTANT)
+        final = np.array([[
+            data["age"],
+            data["sex"],
+            data["cp"],
+            data["trestbps"],
+            data["chol"],
+            data["fbs"],
+            data["thalach"],
+            data["exang"]
+        ]])
 
-        final = np.array([list(data.values())])
+        # ML prediction
+        prediction = model.predict(final)[0]
 
-        prediction = model.predict(final)
-
-        # 🔥 DEBUG (remove later)
-        print("Input Data:", data)
-        print("Prediction Value:", prediction[0])
-
-        # 🔥 Correct mapping
-        if prediction[0] == 1:
-            result = "⚠️ High Risk of Heart Disease"
+        if prediction == 0:
+          result = "⚠️ High Risk of Heart Disease"
         else:
-            result = "✅ No Heart Disease"
+          result = "✅ No Heart Disease"
 
-        # SAVE HISTORY
+        # save history
         conn = get_db()
         cur = conn.cursor()
 
