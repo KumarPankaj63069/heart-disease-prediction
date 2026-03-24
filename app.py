@@ -1,3 +1,4 @@
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, session
 import numpy as np
 import pickle
@@ -152,7 +153,7 @@ def predict():
             value = request.form.get(name)
             data[name] = float(value) if value else 0
 
-        # 🔥 FIXED ORDER (MOST IMPORTANT)
+     #datas 
         final = np.array([[
             data["age"],
             data["sex"],
